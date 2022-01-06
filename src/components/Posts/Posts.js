@@ -7,7 +7,7 @@ import useStyles from "./styles";
 import Post from "./Post/Post";
 
 function Posts({ setCurrentId }) {
-  const posts = useSelector((state) => state.posts);
+  let posts = useSelector((state) => state.posts);
   const classes = useStyles();
 
   return !posts.length ? (
