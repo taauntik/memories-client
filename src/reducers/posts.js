@@ -1,4 +1,5 @@
 import {
+  AUTH,
   CREATE,
   DELETE,
   FETCH_ALL,
