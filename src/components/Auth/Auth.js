@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import useStyles from "./styles";
 import Input from "./Input";
 import Icon from "./icon";
+import { signup, signin } from "../../actions/auth";
 
 const initialState = {
   firstname: "",
@@ -28,20 +29,22 @@ const initialState = {
 function Auth() {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState(initialState);
+  const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    if (isSignup) {
+      dispatch(signup(form, navigate));
+    } else {
+      dispatch(signin(form, navigate));
+    }
   };
 
-  const handleChange = (e) => {
-    // setFormData({ ...formData, [e.target.name]: e.target.vaule });
-    console.log(e.target.name, e.target.value);
-  };
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
   const googleSuccess = async (res) => {
     const result = res?.profileObj;
@@ -59,6 +62,7 @@ function Auth() {
     console.log("Google sign in was unsuccessful. Try again later");
   };
   const switchMode = () => {
+    setForm(initialState);
     setIsSignup((prevState) => !prevState);
     setShowPassword(false);
   };
@@ -108,7 +112,7 @@ function Auth() {
               <Input
                 name="confirmPassword"
                 label="Repeat Password"
-                handleChagne={handleChange}
+                handleChange={handleChange}
                 type="password"
               />
             )}

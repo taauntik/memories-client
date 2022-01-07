@@ -16,7 +16,7 @@ function Input({
     <Grid item xs={12} sm={half ? 6 : 12}>
       <TextField
         name={name}
-        onChagne={handleChange}
+        onChange={handleChange}
         variant="outlined"
         required
         fullWidth
@@ -25,7 +25,7 @@ function Input({
         type={type}
         InputProps={
           name === "password" && {
-            endAdorment: (
+            endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={handleShowPassword}>
                   {type === "password" ? <Visibility /> : <VisibilityOff />}
