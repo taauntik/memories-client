@@ -8,18 +8,18 @@ import useStyles from "./styles";
 import { createPost, updatePost } from "../../actions/posts";
 
 function Form({ currentId, setCurrentId }) {
-  const classes = useStyles();
-  const post = useSelector((state) =>
-    currentId ? state.posts.find((message) => message._id === currentId) : null
-  );
   const [postData, setPostData] = useState({
-    creator: "",
     title: "",
     message: "",
     tags: "",
     selectedFile: "",
   });
+  const classes = useStyles();
+  const post = useSelector((state) =>
+    currentId ? state.posts.find((message) => message._id === currentId) : null
+  );
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   useEffect(() => {
     if (post) {
@@ -30,7 +30,6 @@ function Form({ currentId, setCurrentId }) {
   const clear = () => {
     setCurrentId(0);
     setPostData({
-      creator: "",
       title: "",
       message: "",
       tags: "",
@@ -42,13 +41,25 @@ function Form({ currentId, setCurrentId }) {
     e.preventDefault();
 
     if (currentId === 0) {
-      dispatch(createPost(postData));
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
       clear();
     } else {
-      dispatch(updatePost(currentId, postData));
+      dispatch(
+        updatePost(currentId, { ...postData, name: user?.result?.name })
+      );
       clear();
     }
   };
+
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Please sign in to create your own memories and like others memories
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -61,20 +72,6 @@ function Form({ currentId, setCurrentId }) {
         <Typography variant="h6">
           {currentId ? "Editing" : "Creating a Memory"}
         </Typography>
-        <TextField
-          name="creator"
-          variant="outlined"
-          label="Ceator"
-          onChange={(e) =>
-            setPostData((prevState) => ({
-              ...prevState,
-              creator: e.target.value,
-            }))
-          }
-          value={postData.creator}
-          fullWidth
-          style={{ marginBottom: "10px" }}
-        />
         <TextField
           name="title"
           variant="outlined"
@@ -93,6 +90,8 @@ function Form({ currentId, setCurrentId }) {
           name="message"
           variant="outlined"
           label="Message"
+          multiline
+          rows={4}
           onChange={(e) =>
             setPostData((prevState) => ({
               ...prevState,

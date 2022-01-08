@@ -1,31 +1,38 @@
-import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { AppBar, Typography, Toolbar, Avatar, Button } from "@material-ui/core";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import decode from "jwt-decode";
 
-// internal imports
-import useStyles from "./styles";
 import memories from "../../images/memories.png";
+import * as actionType from "../../constants/actionTypes";
+import useStyles from "./styles";
 
-function Navbar() {
-  const classes = useStyles();
-  const navigate = useNavigate();
-  const userInfo = JSON.parse(localStorage.getItem("profile"));
-  const [user, setUser] = useState(userInfo);
-  const location = useLocation();
+const Navbar = () => {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const classes = useStyles();
 
   const logout = () => {
-    dispatch({ type: "LOGOUT" });
-    navigate("/");
+    dispatch({ type: actionType.LOGOUT });
+
+    navigate("/auth");
+
     setUser(null);
   };
 
   useEffect(() => {
     const token = user?.token;
 
-    // JWT....
-    setUser(userInfo);
+    if (token) {
+      const decodedToken = decode(token);
+
+      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
+
+    setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
 
   return (
@@ -40,25 +47,20 @@ function Navbar() {
         >
           Memories
         </Typography>
-        <img
-          className={classes.image}
-          src={memories}
-          alt="memories"
-          height="60"
-        />
+        <img className={classes.image} src={memories} alt="icon" height="60" />
       </div>
       <Toolbar className={classes.toolbar}>
-        {user ? (
+        {user?.result ? (
           <div className={classes.profile}>
             <Avatar
               className={classes.purple}
-              alt={user.result.name}
-              src={user.result.imageUrl}
+              alt={user?.result.name}
+              src={user?.result.imageUrl}
             >
-              {user.result.name.charAt(0)}
+              {user?.result.name.charAt(0)}
             </Avatar>
             <Typography className={classes.userName} variant="h6">
-              {user.result.name}
+              {user?.result.name}
             </Typography>
             <Button
               variant="contained"
@@ -71,16 +73,17 @@ function Navbar() {
           </div>
         ) : (
           <Button
+            component={Link}
+            to="/auth"
             variant="contained"
             color="primary"
-            onClick={() => navigate("/auth")}
           >
-            sign in
+            Sign In
           </Button>
         )}
       </Toolbar>
     </AppBar>
   );
-}
+};
 
 export default Navbar;
