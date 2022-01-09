@@ -70,94 +70,96 @@ function Auth() {
     setShowPassword((prevState) => !prevState);
   };
 
-  return (
-    <Container component="main" maxWidth="xs">
-      <Paper className={classes.paper} elevation={3}>
-        <Avatar className={classes.avatar}>
-          <LockOutLinedIcon />
-        </Avatar>
-        <Typography variant="h5">{isSignup ? "Sign Up" : "Sign In"}</Typography>
-        <form className={classes.form} onSubmit={handleSubmit}>
-          <Grid container spacing={3}>
-            {isSignup && (
-              <>
-                <Input
-                  name="firstname"
-                  label="First name"
-                  handleChange={handleChange}
-                  half
-                />
-                <Input
-                  name="lastname"
-                  label="Last name"
-                  handleChange={handleChange}
-                  half
-                />
-              </>
-            )}
-            <Input
-              name="email"
-              label="Email Address"
-              handleChange={handleChange}
-              type="email"
-            />
-            <Input
-              name="password"
-              label="Password"
-              handleChange={handleChange}
-              handleShowPassword={handleShowPassword}
-              type={showPassword ? "text" : "password"}
-            />
-            {isSignup && (
-              <Input
-                name="confirmPassword"
-                label="Repeat Password"
-                handleChange={handleChange}
-                type="password"
-              />
-            )}
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+    return (
+      <Container component="main" maxWidth="xs">
+        <Paper className={classes.paper} elevation={3}>
+          <Avatar className={classes.avatar}>
+            <LockOutLinedIcon />
+          </Avatar>
+          <Typography variant="h5">
             {isSignup ? "Sign Up" : "Sign In"}
-          </Button>
-          <GoogleLogin
-            clientId="454685022283-hm9i5ibopfbt2kk1dqqd60f2hqk2oqum.apps.googleusercontent.com"
-            render={(renderProps) => (
-              <Button
-                className={classes.googleButton}
-                color="primary"
-                fullWidth
-                onClick={renderProps.onClick}
-                disabled={renderProps.disabled}
-                startIcon={<Icon />}
-                variant="contained"
-              >
-                Google Sign In
-              </Button>
-            )}
-            onSuccess={googleSuccess}
-            onFailure={googleFailure}
-            cookiePolicy="single_host_origin"
-          />
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Button onClick={switchMode}>
-                {isSignup
-                  ? "Already have an account? Sign in"
-                  : "Don't have an account? Sign Up"}
-              </Button>
+          </Typography>
+          <form className={classes.form} onSubmit={handleSubmit}>
+            <Grid container spacing={3}>
+              {isSignup && (
+                <>
+                  <Input
+                    name="firstname"
+                    label="First name"
+                    handleChange={handleChange}
+                    half
+                  />
+                  <Input
+                    name="lastname"
+                    label="Last name"
+                    handleChange={handleChange}
+                    half
+                  />
+                </>
+              )}
+              <Input
+                name="email"
+                label="Email Address"
+                handleChange={handleChange}
+                type="email"
+              />
+              <Input
+                name="password"
+                label="Password"
+                handleChange={handleChange}
+                handleShowPassword={handleShowPassword}
+                type={showPassword ? "text" : "password"}
+              />
+              {isSignup && (
+                <Input
+                  name="confirmPassword"
+                  label="Repeat Password"
+                  handleChange={handleChange}
+                  type="password"
+                />
+              )}
             </Grid>
-          </Grid>
-        </form>
-      </Paper>
-    </Container>
-  );
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              {isSignup ? "Sign Up" : "Sign In"}
+            </Button>
+            <GoogleLogin
+              clientId="454685022283-hm9i5ibopfbt2kk1dqqd60f2hqk2oqum.apps.googleusercontent.com"
+              render={(renderProps) => (
+                <Button
+                  className={classes.googleButton}
+                  color="primary"
+                  fullWidth
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                  startIcon={<Icon />}
+                  variant="contained"
+                >
+                  Google Sign In
+                </Button>
+              )}
+              onSuccess={googleSuccess}
+              onFailure={googleFailure}
+              cookiePolicy="single_host_origin"
+            />
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Button onClick={switchMode}>
+                  {isSignup
+                    ? "Already have an account? Sign in"
+                    : "Don't have an account? Sign Up"}
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </Paper>
+      </Container>
+    );
 }
 
 export default Auth;

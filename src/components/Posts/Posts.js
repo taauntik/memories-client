@@ -20,7 +20,7 @@ function Posts({ setCurrentId }) {
       spacing={3}
     >
       {posts.map((post) => (
-        <Grid key={posts._id} item xs={12} sm={6}>
+        <Grid key={posts._id} item xs={12} sm={12} md={6} lg={3}>
           <Post setCurrentId={setCurrentId} post={post} />
         </Grid>
       ))}

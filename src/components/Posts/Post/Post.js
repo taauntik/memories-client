@@ -23,8 +23,6 @@ function Post({ post, setCurrentId }) {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("profile"));
 
-  console.log(post.likes.length);
-
   const Likes = () => {
     if (post.likes.length > 0) {
       return post.likes.find(
@@ -54,7 +52,7 @@ function Post({ post, setCurrentId }) {
   };
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} raised elevation={6}>
       <CardMedia
         className={classes.media}
         image={post.selectedFile}
