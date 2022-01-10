@@ -138,7 +138,7 @@ function Auth() {
               {isSignup ? "Sign Up" : "Sign In"}
             </Button>
             <GoogleLogin
-              clientId="454685022283-hm9i5ibopfbt2kk1dqqd60f2hqk2oqum.apps.googleusercontent.com"
+              clientId="454685022283-hap9l58f2aifme6j6tl1iuaie9b1tvnh.apps.googleusercontent.com"
               render={(renderProps) => (
                 <Button
                   className={classes.googleButton}
