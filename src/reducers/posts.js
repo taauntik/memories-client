@@ -6,6 +6,7 @@ import {
   UPDATE,
   DELETE,
   LIKE,
+  CLEAR_POST,
 } from "../constants/actionTypes";
 
 const reducer = (state = { isLoading: true, posts: [] }, action) => {
@@ -25,6 +26,8 @@ const reducer = (state = { isLoading: true, posts: [] }, action) => {
       return { ...state, posts: action.payload.data };
     case FETCH_POST:
       return { ...state, post: action.payload.post };
+    case CLEAR_POST:
+      return { ...state, post: {} };
     case LIKE:
       return {
         ...state,
