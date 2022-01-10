@@ -17,6 +17,7 @@ import useStyles from "./styles";
 import Input from "./Input";
 import Icon from "./icon";
 import { signup, signin } from "../../actions/auth";
+import { useEffect } from "react";
 
 const initialState = {
   firstname: "",
@@ -31,6 +32,7 @@ function Auth() {
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -42,6 +44,10 @@ function Auth() {
       dispatch(signin(form, navigate));
     }
   };
+
+  useEffect(() => {
+    setUser(localStorage.getItem("profile"));
+  }, [user]);
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -70,6 +76,9 @@ function Auth() {
     setShowPassword((prevState) => !prevState);
   };
 
+  if (user) {
+    navigate("/posts");
+  } else {
     return (
       <Container component="main" maxWidth="xs">
         <Paper className={classes.paper} elevation={3}>
@@ -160,6 +169,7 @@ function Auth() {
         </Paper>
       </Container>
     );
+  }
 }
 
 export default Auth;

@@ -23,7 +23,7 @@ function Input({
         label={label}
         autoFocus={autoFocus}
         type={type}
-        InputProps={
+        InputProps={() =>
           name === "password" && {
             endAdornment: (
               <InputAdornment position="end">
