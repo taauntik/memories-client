@@ -137,25 +137,6 @@ function Auth() {
             >
               {isSignup ? "Sign Up" : "Sign In"}
             </Button>
-            <GoogleLogin
-              clientId="454685022283-hap9l58f2aifme6j6tl1iuaie9b1tvnh.apps.googleusercontent.com"
-              render={(renderProps) => (
-                <Button
-                  className={classes.googleButton}
-                  color="primary"
-                  fullWidth
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
-                  startIcon={<Icon />}
-                  variant="contained"
-                >
-                  Google Sign In
-                </Button>
-              )}
-              onSuccess={googleSuccess}
-              onFailure={googleFailure}
-              cookiePolicy="single_host_origin"
-            />
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Button onClick={switchMode}>
