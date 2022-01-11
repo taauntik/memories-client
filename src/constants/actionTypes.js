@@ -10,3 +10,5 @@ export const END_LOADING = "END_LOADING";
 export const FETCH_POST = "FETCH_POST";
 export const LIKE = "LIKE";
 export const CLEAR_POST = "CLEAR_POST";
+export const SET_ERROR = "SET_ERROR";
+export const RESET_ERROR = "RESET_ERROR";

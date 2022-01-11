@@ -14,10 +14,7 @@ import useStyles from "./styles";
 import { CLEAR_POST } from "../../constants/actionTypes";
 
 const Post = () => {
-  const { post, posts, isLoading } = useSelector((state) => {
-    console.log(state);
-    return state.posts;
-  });
+  const { post, posts, isLoading } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const classes = useStyles();
