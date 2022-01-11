@@ -1,10 +1,11 @@
 import React from "react";
-import { Grid, CircularProgress } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
 // internal imports
 import useStyles from "./styles";
 import Post from "./Post/Post";
+import CardLoadingSkeletons from "../custom/CardSkeleton/CardLoadingSkeletons";
 
 function Posts({ setCurrentId }) {
   let { posts, isLoading } = useSelector((state) => state.posts);
@@ -13,7 +14,7 @@ function Posts({ setCurrentId }) {
   if (!posts.length && !isLoading) return "No posts";
 
   return isLoading ? (
-    <CircularProgress />
+    <CardLoadingSkeletons posts={posts} classes={classes} />
   ) : (
     <Grid
       className={classes.mainContainer}
